@@ -1,8 +1,8 @@
 :root {
     --default: #121213;
-    --empty: #3a3a3c;
-    --wrong: #b59f3b;
-    --right: #538d4e;
+    --wrong: #3a3a3c;
+    --wrong-position: #b59f3b;
+    --right-position: #538d4e;
 }
 
 body {
@@ -21,29 +21,32 @@ body {
 .box {
     width: 50px;
     height: 50px;
-    border: 2px solid var(--empty);
+    box-sizing: border-box;
+    border: 2px solid var(--wrong);
     color: white;
     margin: 1px;
     font-size: 30px;
-    text-align: center;
-    place-items: center;
     font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
     text-transform: uppercase;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.box.empty {
-    background: var(--empty);
-}
-
 .box.wrong {
     background: var(--wrong);
+    border: none;
 }
 
-.box.right {
-    background: var(--right);
+.box.wrong-position {
+    background: var(--wrong-position);
+    border: none;
+}
+
+.box.right-position {
+    background: var(--right-position);
+    border: none;
 }
 
 #game {
@@ -66,6 +69,7 @@ button {
     margin-right: .1rem;
     margin-top: .5rem;
     font-size: 1.3rem;
+    font-weight: bold;
     color: white;
     width: 40px;
     height: 55px;
