@@ -136,6 +136,7 @@ function reveal(guess) {
     for (let i = 0; i < 5; i++) {
         const box = document.getElementById(`box${row}${i}`);
         const letter = box.textContent;
+        const key = document.getElementById(letter);
 
         const letterFrequencySecret = getLetterFrequency(state.secret, letter);
         const letterFrequencyGuess = getLetterFrequency(guess, letter);
@@ -144,16 +145,21 @@ function reveal(guess) {
         setTimeout(() => {
             if (letterFrequencyGuess > letterFrequencySecret
                 && letterPosition > letterFrequencySecret) {
-                box.classList.add('wrong');
+                    box.classList.add('wrong');
+                    key.classList.add('wrong');
             } else {
                 if (letter === state.secret[i]) {
                     box.classList.add('right-position');
+                    key.classList.add('right-position');
                 } else if (state.secret.includes(letter)) {
                     box.classList.add('wrong-position');
+                    key.classList.add('wrong-position');
                 } else {
                     box.classList.add('wrong');
+                    key.classList.add('wrong');
                 }
             }
+            console.log(box.classList.keys());
         }, ((i + 1) * animation_duration) / 2);
 
         box.classList.add('animated');
@@ -166,22 +172,22 @@ function reveal(guess) {
     setTimeout(() => {
         if (isWinner) {
             switch (state.currentRow) {
-                case 0:
+                case 1:
                     alert('Genius');
                     break;
-                case 1:
+                case 2:
                     alert('Magnificent');
                     break;
-                case 2:
+                case 3:
                     alert('Impressive');
                     break;
-                case 3:
+                case 4:
                     alert('Splendid');
                     break;
-                case 4:
+                case 5:
                     alert('Great');
                     break;
-                case 5:
+                case 6:
                     alert('Phew');
                     break;
             }
@@ -261,7 +267,6 @@ function registerVirtualKeyboardEvents() {
     });
 
     enter.addEventListener('click', () => {
-        // alert(state.grid);
         checkAnswer();
     });
 }
@@ -276,3 +281,4 @@ function start() {
 }
 
 start();
+console.log(state.secret)

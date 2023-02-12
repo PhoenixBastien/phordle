@@ -107,20 +107,17 @@ button {
     text-transform: uppercase;
 }
 
-/* .box.wrong {
+.key.wrong {
     background: var(--wrong);
-    border: none;
 }
 
-.box.wrong-position {
+.key.wrong-position {
     background: var(--wrong-position);
-    border: none;
 }
 
-.box.right-position {
+.key.right-position {
     background: var(--right-position);
-    border: none;
-} */
+}
 
 .enter {
     width: 65px;
