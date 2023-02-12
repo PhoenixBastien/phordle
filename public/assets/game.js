@@ -27,7 +27,8 @@ function updateGrid(container) {
     grid.className = 'grid';
 
     for (let i = 0; i < state.grid.length; i++) {
-        for (let j = 0; j < state.grid.length; j++) {
+        for (let j = 0; j < state.grid[i].length; j++) {
+            const box = document.getElementById(`box${i}${j}`);
             box.textContent = state.grid[i][j];
         }
     }
@@ -105,16 +106,7 @@ function registerKeyboardEvents() {
     document.body.onkeydown = (e) => {
         const key = e.key;
         if (key === 'Enter') {
-            if (state.currentCol === 5) {
-                const word = getCurrentWord();
-                if (isValid(word)) {
-                    reveal(word);
-                    state.currentRow++;
-                    state.currentCol = 0;
-                } else {
-                    alert('Not a valid word.');
-                }
-            }
+            checkAnswer()
         }
         if (key === 'Backspace') {
             pop();
@@ -153,11 +145,26 @@ function push(letter) {
 }
 
 function pop() {
-    if (state.currentCol === 5) {
+    if (state.currentCol === 0) {
         return;
     }
     state.grid[state.currentRow][state.currentCol - 1] = '';
     state.currentCol--;
+}
+
+function checkAnswer() {
+    if (state.currentCol === 5) {
+        const word = getCurrentWord();
+        if (isValid(word)) {
+            reveal(word);
+            state.currentRow++;
+            state.currentCol = 0;
+        } else {
+            alert('Not a valid word.');
+        }
+    } else {
+        alert('Not enough letters.');
+    }
 }
 
 function start() {
@@ -169,3 +176,24 @@ function start() {
 }
 
 start();
+
+const buttons = document.querySelectorAll('.key')
+const backspace = document.querySelector('.backspace')
+const enter = document.querySelector('.enter')
+
+buttons.forEach(key => {
+    key.addEventListener('click', () => {
+        push(key.textContent)
+        updateGrid()
+    })
+})
+
+backspace.addEventListener('click', () => {
+    pop()
+    updateGrid()
+})
+
+enter.addEventListener('click', () => {
+    alert(state.grid)
+    checkAnswer()
+})
