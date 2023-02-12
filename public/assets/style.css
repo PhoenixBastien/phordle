@@ -9,6 +9,27 @@ body {
     background: var(--default);
 }
 
+hr {
+    height: 1px;
+    border: none;
+    background-color: var(--wrong);
+    margin: -10px -10px 5px;
+}
+
+#title {
+    color: white;
+    text-align: center;
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+    font-weight: bold;
+}
+
+#game {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    /* height: 600px; */
+}
+
 .grid {
     display: grid;
     align-content: center;
@@ -49,11 +70,20 @@ body {
     border: none;
 }
 
-#game {
-    display: grid;
-    place-items: center;
-    width: 100%;
-    /* height: 600px; */
+.animated {
+    animation: flip 0.5s ease;
+}
+
+@keyframes flip {
+    0% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
 }
 
 .keyboard {
@@ -77,24 +107,25 @@ button {
     text-transform: uppercase;
 }
 
+/* .box.wrong {
+    background: var(--wrong);
+    border: none;
+}
+
+.box.wrong-position {
+    background: var(--wrong-position);
+    border: none;
+}
+
+.box.right-position {
+    background: var(--right-position);
+    border: none;
+} */
+
 .enter {
     width: 65px;
 }
 
 .backspace {
     width: 65px;
-}
-
-#title {
-    color: white;
-    text-align: center;
-    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-    font-weight: bold;
-}
-
-hr {
-    height: 1px;
-    border: none;
-    background-color: var(--wrong);
-    margin: -10px -10px 5px;
 }

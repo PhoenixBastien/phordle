@@ -22,7 +22,7 @@ function drawGrid(container) {
     container.appendChild(grid);
 }
 
-function updateGrid(container) {
+function updateGrid() {
     const grid = document.createElement('div');
     grid.className = 'grid';
 
@@ -39,7 +39,6 @@ function drawBox(container, row, col, letter = '') {
     box.className = 'box';
     box.textContent = letter;
     box.id = `box${row}${col}`;
-
     container.appendChild(box);
     return box;
 }
@@ -48,6 +47,7 @@ function drawKeyboard(container) {
     const keyboard = document.createElement('div');
     keyboard.className = 'keyboard';
     
+    // first row
     const row1 = document.createElement('div');
     row1.className = 'row';
 
@@ -56,12 +56,13 @@ function drawKeyboard(container) {
         const button = document.createElement('button');
         button.className = 'key';
         button.textContent = lettersRow1.charAt(i);
-
+        button.id = button.textContent;
         row1.appendChild(button);
     }
 
     keyboard.appendChild(row1);
 
+    // second row
     const row2 = document.createElement('div');
     row2.className = 'row';
 
@@ -70,15 +71,17 @@ function drawKeyboard(container) {
         const button = document.createElement('button');
         button.className = 'key';
         button.textContent = lettersRow2.charAt(i);
-
+        button.id = button.textContent;
         row2.appendChild(button);
     }
 
     keyboard.appendChild(row2);
 
+    // third row
     const row3 = document.createElement('div');
     row3.className = 'row';
 
+    // enter key
     const enter = document.createElement('button');
     enter.className = 'enter';
     enter.textContent = '⏎';
@@ -89,10 +92,11 @@ function drawKeyboard(container) {
         const button = document.createElement('button');
         button.className = 'key';
         button.textContent = lettersRow3.charAt(i);
-        
+        button.id = button.textContent;
         row3.appendChild(button);
     }
     
+    // backspace key
     const backspace = document.createElement('button');
     backspace.className = 'backspace';
     backspace.textContent = '⌫';
@@ -100,23 +104,6 @@ function drawKeyboard(container) {
 
     keyboard.appendChild(row3);
     container.appendChild(keyboard);
-}
-
-function registerKeyboardEvents() {
-    document.body.onkeydown = (e) => {
-        const key = e.key;
-        if (key === 'Enter') {
-            checkAnswer()
-        }
-        if (key === 'Backspace') {
-            pop();
-        }
-        if (isLetter(key)) {
-            push(key);
-        }
-
-        updateGrid();
-    };
 }
 
 function getCurrentWord() {
@@ -128,8 +115,80 @@ function isValid(word) {
 }
 
 function getLetterFrequency(word, letter) {
-    regex = RegExp(`${letter}`);
-    (word.match(regex) || '').length;
+    const regex = RegExp(`${letter}`);
+    return (word.match(regex) || '').length;
+}
+
+function getLetterPosition(word, letter, position) {
+    let result = 0;
+    for (let i = 0; i <= position; i++) {
+        if (word[i] === letter) {
+            result++;
+        }        
+    }
+    return result;
+}
+
+function reveal(guess) {
+    const row = state.currentRow;
+    const animation_duration = 500;
+
+    for (let i = 0; i < 5; i++) {
+        const box = document.getElementById(`box${row}${i}`);
+        const letter = box.textContent;
+
+        const letterFrequencySecret = getLetterFrequency(state.secret, letter);
+        const letterFrequencyGuess = getLetterFrequency(guess, letter);
+        const letterPosition = getLetterPosition(guess, letter, i);
+        
+        setTimeout(() => {
+            if (letterFrequencyGuess > letterFrequencySecret
+                && letterPosition > letterFrequencySecret) {
+                box.classList.add('wrong');
+            } else {
+                if (letter === state.secret[i]) {
+                    box.classList.add('right-position');
+                } else if (state.secret.includes(letter)) {
+                    box.classList.add('wrong-position');
+                } else {
+                    box.classList.add('wrong');
+                }
+            }
+        }, ((i + 1) * animation_duration) / 2);
+
+        box.classList.add('animated');
+        box.style.animationDelay = `${(i * animation_duration) / 2}ms`;
+    }
+
+    const isWinner = state.secret === guess;
+    const isLoser = state.currentRow === 5;
+
+    setTimeout(() => {
+        if (isWinner) {
+            switch (state.currentRow) {
+                case 0:
+                    alert('Genius');
+                    break;
+                case 1:
+                    alert('Magnificent');
+                    break;
+                case 2:
+                    alert('Impressive');
+                    break;
+                case 3:
+                    alert('Splendid');
+                    break;
+                case 4:
+                    alert('Great');
+                    break;
+                case 5:
+                    alert('Phew');
+                    break;
+            }
+        } else if (isLoser) {
+            alert(state.secret);
+        }
+    }, 3 * animation_duration);
 }
 
 function isLetter(key) {
@@ -167,33 +226,53 @@ function checkAnswer() {
     }
 }
 
+function registerPhysicalKeyboardEvents() {
+    document.body.onkeydown = (e) => {
+        const key = e.key;
+        if (key === 'Enter') {
+            checkAnswer();
+        }
+        if (key === 'Backspace') {
+            pop();
+        }
+        if (isLetter(key)) {
+            push(key);
+        }
+
+        updateGrid();
+    };
+}
+
+function registerVirtualKeyboardEvents() {
+    const buttons = document.querySelectorAll('.key');
+    const backspace = document.querySelector('.backspace');
+    const enter = document.querySelector('.enter');
+
+    buttons.forEach(key => {
+        key.addEventListener('click', () => {
+            push(key.textContent);
+            updateGrid();
+        });
+    });
+
+    backspace.addEventListener('click', () => {
+        pop();
+        updateGrid();
+    });
+
+    enter.addEventListener('click', () => {
+        // alert(state.grid);
+        checkAnswer();
+    });
+}
+
 function start() {
     const game = document.getElementById('game');
     drawGrid(game);
     drawKeyboard(game);
 
-    registerKeyboardEvents();
+    registerPhysicalKeyboardEvents();
+    registerVirtualKeyboardEvents();
 }
 
 start();
-
-const buttons = document.querySelectorAll('.key')
-const backspace = document.querySelector('.backspace')
-const enter = document.querySelector('.enter')
-
-buttons.forEach(key => {
-    key.addEventListener('click', () => {
-        push(key.textContent)
-        updateGrid()
-    })
-})
-
-backspace.addEventListener('click', () => {
-    pop()
-    updateGrid()
-})
-
-enter.addEventListener('click', () => {
-    alert(state.grid)
-    checkAnswer()
-})
