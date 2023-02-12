@@ -9,7 +9,7 @@ body {
     background: var(--default);
 }
 
-.grid-container {
+.grid {
     display: grid;
     align-content: center;
     grid-template-rows: repeat(6, auto);
@@ -53,21 +53,21 @@ body {
     display: grid;
     place-items: center;
     width: 100%;
-    height: 600px;
+    /* height: 600px; */
 }
 
 .keyboard {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 2px;
 }
 
 button {
     background-color: grey;
     border: none;
     display: inline-block;
-    margin-right: .1rem;
-    margin-top: .5rem;
+    margin: 3px;
     font-size: 1.3rem;
     font-weight: bold;
     color: white;
@@ -77,5 +77,24 @@ button {
     text-transform: uppercase;
 }
 
-.enter { width: 65px; }
-.delete { width: 65px; }
+.enter {
+    width: 65px;
+}
+
+.backspace {
+    width: 65px;
+}
+
+#title {
+    color: white;
+    text-align: center;
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+    font-weight: bold;
+}
+
+hr {
+    height: 1px;
+    border: none;
+    background-color: var(--wrong);
+    margin: -10px -10px 5px;
+}

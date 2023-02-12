@@ -2,80 +2,84 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta title="Wordle">
+        <title>Wordle</title>
         <link rel="stylesheet" href="./assets/style.css">
     </head>
     <body>
+        <h1 id="title">Wordle</h1>
+        <hr>
         <div id="game">
-            <div class="grid-container">
-                <div class="box empty">s</div>
-                <div class="box empty">w</div>
-                <div class="box wrong">e</div>  
-                <div class="box empty">a</div>
-                <div class="box empty">t</div>
-                <div class="box wrong">g</div>  
-                <div class="box empty">l</div>
-                <div class="box empty">i</div>
-                <div class="box wrong">d</div>
-                <div class="box wrong">e</div>
-                <div class="box">p</div>
-                <div class="box">h</div>
-                <div class="box">o</div>
-                <div class="box">n</div>
-                <div class="box">y</div>
-                <div class="box">16</div>
-                <div class="box">17</div>
-                <div class="box">18</div>
-                <div class="box">19</div>
-                <div class="box">20</div>
-                <div class="box">21</div>
-                <div class="box">22</div>
-                <div class="box">23</div>
-                <div class="box">24</div>
-                <div class="box">25</div>
-                <div class="box">26</div>
-                <div class="box">27</div>
-                <div class="box">28</div>
-                <div class="box">29</div>
-                <div class="box">30</div>
-            </div>
-            <div class="keyboard">
+            <!-- <div class="grid">
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div> -->
+            <!-- <div class="keyboard">
                 <div class="row">
-                    <button class="btn">q</button>
-                    <button class="btn">w</button>
-                    <button class="btn">e</button>
-                    <button class="btn">r</button>
-                    <button class="btn">t</button>
-                    <button class="btn">y</button>
-                    <button class="btn">u</button>
-                    <button class="btn">i</button>
-                    <button class="btn">o</button>
-                    <button class="btn">p</button>
+                    <button class="key">q</button>
+                    <button class="key">w</button>
+                    <button class="key">e</button>
+                    <button class="key">r</button>
+                    <button class="key">t</button>
+                    <button class="key">y</button>
+                    <button class="key">u</button>
+                    <button class="key">i</button>
+                    <button class="key">o</button>
+                    <button class="key">p</button>
                 </div>
                 <div class="row">
-                    <button class="btn">a</button>
-                    <button class="btn">s</button>
-                    <button class="btn">d</button>
-                    <button class="btn">f</button>
-                    <button class="btn">g</button>
-                    <button class="btn">h</button>
-                    <button class="btn">j</button>
-                    <button class="btn">k</button>
-                    <button class="btn">l</button>
+                    <button class="key">a</button>
+                    <button class="key">s</button>
+                    <button class="key">d</button>
+                    <button class="key">f</button>
+                    <button class="key">g</button>
+                    <button class="key">h</button>
+                    <button class="key">j</button>
+                    <button class="key">k</button>
+                    <button class="key">l</button>
                 </div>
                 <div class="row">
                     <button class="enter">&#9166;</button>
-                    <button class="btn">z</button>
-                    <button class="btn">x</button>
-                    <button class="btn">c</button>
-                    <button class="btn">v</button>
-                    <button class="btn">b</button>
-                    <button class="btn">n</button>
-                    <button class="btn">m</button>
-                    <button class="delete">&#9003;</button>
+                    <button class="key">z</button>
+                    <button class="key">x</button>
+                    <button class="key">c</button>
+                    <button class="key">v</button>
+                    <button class="key">b</button>
+                    <button class="key">n</button>
+                    <button class="key">m</button>
+                    <button class="backspace">&#9003;</button>
                 </div>
-            </div>
+            </div> -->
         </div>
-        <script src="./assets/index.js" type="module"></script>
+        <script src="./assets/game.js" type="module"></script>
+        <script src="./assets/keyboard.js" type="module"></script>
+        <script src="./assets/dictionary.js" type="module"></script>
     </body>
 </html>
