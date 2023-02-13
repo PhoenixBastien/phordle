@@ -190,10 +190,10 @@ function reveal(guess) {
                     alert('Phew');
                     break;
             }
-            // ends game
             Object.freeze(state);
         } else if (isLoser) {
             alert(state.secret);
+            Object.freeze(state);
         }
     }, 3 * animation_duration);
 }
