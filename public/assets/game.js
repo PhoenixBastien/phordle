@@ -6,7 +6,7 @@ const state = {
         .fill()
         .map(() => Array(5). fill('')),
     currentRow: 0,
-    currentCol: 0,
+    currentCol: 0
 }
 
 function drawGrid(container) {
@@ -159,7 +159,6 @@ function reveal(guess) {
                     key.classList.add('wrong');
                 }
             }
-            console.log(box.classList.keys());
         }, ((i + 1) * animation_duration) / 2);
 
         box.classList.add('animated');
@@ -194,6 +193,8 @@ function reveal(guess) {
         } else if (isLoser) {
             alert(state.secret);
         }
+        // ends game
+        Object.freeze(state);
     }, 3 * animation_duration);
 }
 
@@ -202,7 +203,7 @@ function isLetter(key) {
 }
 
 function push(letter) {
-    if (state.currentCol === 5) {
+    if (state.currentCol === 5 || Object.isFrozen(state)) {
         return;
     }
     state.grid[state.currentRow][state.currentCol] = letter;
@@ -210,7 +211,7 @@ function push(letter) {
 }
 
 function pop() {
-    if (state.currentCol === 0) {
+    if (state.currentCol === 0 || Object.isFrozen(state)) {
         return;
     }
     state.grid[state.currentRow][state.currentCol - 1] = '';
@@ -232,9 +233,9 @@ function checkAnswer() {
     }
 }
 
-function registerPhysicalKeyboardEvents() {
-    document.body.onkeydown = (e) => {
-        const key = e.key;
+function enablePhysicalKeyboard() { 
+    document.addEventListener('keydown', (event) => {
+        const key = event.key;
         if (key === 'Enter') {
             checkAnswer();
         }
@@ -246,15 +247,15 @@ function registerPhysicalKeyboardEvents() {
         }
 
         updateGrid();
-    };
+    });
 }
 
-function registerVirtualKeyboardEvents() {
-    const buttons = document.querySelectorAll('.key');
+function enableVirtualKeyboard() {
+    const keys = document.querySelectorAll('.key');
     const backspace = document.querySelector('.backspace');
     const enter = document.querySelector('.enter');
 
-    buttons.forEach(key => {
+    keys.forEach((key) => {
         key.addEventListener('click', () => {
             push(key.textContent);
             updateGrid();
@@ -276,9 +277,10 @@ function start() {
     drawGrid(game);
     drawKeyboard(game);
 
-    registerPhysicalKeyboardEvents();
-    registerVirtualKeyboardEvents();
+    enablePhysicalKeyboard();
+    enableVirtualKeyboard();
 }
 
 start();
-console.log(state.secret)
+console.log(state.secret);
+console.log(Object.isFrozen(state));
