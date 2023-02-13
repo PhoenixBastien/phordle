@@ -283,4 +283,3 @@ function start() {
 
 start();
 console.log(state.secret);
-console.log(Object.isFrozen(state));
