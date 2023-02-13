@@ -105,6 +105,7 @@ button {
     height: 55px;
     border-radius: .3rem;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .key.wrong {
