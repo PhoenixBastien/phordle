@@ -219,17 +219,19 @@ function pop() {
 }
 
 function checkAnswer() {
-    if (state.currentCol === 5) {
-        const word = getCurrentWord();
-        if (isValid(word)) {
-            reveal(word);
-            state.currentRow++;
-            state.currentCol = 0;
+    if (!Object.isFrozen(state)) {
+        if (state.currentCol === 5) {
+            const word = getCurrentWord();
+            if (isValid(word)) {
+                reveal(word);
+                state.currentRow++;
+                state.currentCol = 0;
+            } else {
+                alert('Not a valid word.');
+            }
         } else {
-            alert('Not a valid word.');
+            alert('Not enough letters.');
         }
-    } else {
-        alert('Not enough letters.');
     }
 }
 
