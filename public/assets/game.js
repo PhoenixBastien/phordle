@@ -111,20 +111,20 @@ function getCurrentWord() {
 }
 
 function isValid(word) {
-    return dictionary.includes(word);
+    return dictionary.includes(word.toLowerCase());
 }
 
 function getLetterFrequency(word, letter) {
-    const regex = RegExp(`${letter}`);
-    return (word.match(regex) || '').length;
+    const regex = RegExp(`${letter.toLowerCase()}`);
+    return (word.toLowerCase().match(regex) || '').length;
 }
 
 function getLetterPosition(word, letter, position) {
     let result = 0;
     for (let i = 0; i <= position; i++) {
-        if (word[i] === letter) {
+        if (word[i].toLowerCase() === letter.toLowerCase()) {
             result++;
-        }        
+        }
     }
     return result;
 }
@@ -165,7 +165,7 @@ function reveal(guess) {
         box.style.animationDelay = `${(i * animation_duration) / 2}ms`;
     }
 
-    const isWinner = state.secret === guess;
+    const isWinner = state.secret === guess.toLowerCase();
     const isLoser = state.currentRow === 5;
 
     setTimeout(() => {
@@ -199,14 +199,14 @@ function reveal(guess) {
 }
 
 function isLetter(key) {
-    return key.length === 1 && key.match(/[a-z]/i);
+    return key.length === 1 && key.toLowerCase().match(/[a-z]/i);
 }
 
 function push(letter) {
     if (state.currentCol === 5 || Object.isFrozen(state)) {
         return;
     }
-    state.grid[state.currentRow][state.currentCol] = letter;
+    state.grid[state.currentRow][state.currentCol] = letter.toLowerCase();
     state.currentCol++;
 }
 
@@ -238,17 +238,15 @@ function checkAnswer() {
 function enablePhysicalKeyboard() { 
     document.addEventListener('keydown', (event) => {
         const key = event.key;
-        if (key === 'Enter') {
-            checkAnswer();
-        }
-        if (key === 'Backspace') {
-            pop();
-        }
         if (isLetter(key)) {
             push(key);
+            updateGrid();
+        } else if (key === 'Backspace') {
+            pop();
+            updateGrid();
+        } else if (key === 'Enter') {
+            checkAnswer();
         }
-
-        updateGrid();
     });
 }
 
