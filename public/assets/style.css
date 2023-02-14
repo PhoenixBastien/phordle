@@ -53,6 +53,10 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
 .box.wrong {
@@ -70,7 +74,13 @@ hr {
     border: none;
 }
 
-.animated {
+.box.filled {
+    border: 2px solid grey;
+    animation: pop 0.1s linear 1;
+}
+
+.flipped {
+    border: 2px solid grey;
     animation: flip 0.5s ease;
 }
 
@@ -106,6 +116,11 @@ button {
     border-radius: .3rem;
     text-transform: uppercase;
     cursor: pointer;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    outline: none;
 }
 
 .key.wrong {
@@ -127,3 +142,36 @@ button {
 .backspace {
     width: 65px;
 }
+
+button:active {
+    animation: push 0.1s linear 1;
+}
+
+@keyframes push {
+    50% {
+        transform: scale(0.8);
+    }
+}
+
+/* .box:active {
+    animation: pop 0.1s linear 1;
+} */
+
+@keyframes pop {
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* button:hover {
+    animation: pulse 0.5s ease-in infinite;
+}
+
+@keyframes pulse {
+    25% {
+        transform: scale(0.9);
+    }
+    75% {
+        transform: scale(1.1);
+    }
+} */

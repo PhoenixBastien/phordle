@@ -30,6 +30,13 @@ function updateGrid() {
         for (let j = 0; j < state.grid[i].length; j++) {
             const box = document.getElementById(`box${i}${j}`);
             box.textContent = state.grid[i][j];
+            if (state.currentRow === i) {
+                if (box.textContent !== '') {
+                    box.classList.add('filled');
+                } else {
+                    box.classList.remove('filled');
+                }
+            }
         }
     }
 }
@@ -135,7 +142,7 @@ function reveal(guess) {
 
     for (let i = 0; i < 5; i++) {
         const box = document.getElementById(`box${row}${i}`);
-        const letter = box.textContent;
+        const letter = box.textContent.toLowerCase();
         const key = document.getElementById(letter);
 
         const letterFrequencySecret = getLetterFrequency(state.secret, letter);
@@ -145,23 +152,31 @@ function reveal(guess) {
         setTimeout(() => {
             if (letterFrequencyGuess > letterFrequencySecret
                 && letterPosition > letterFrequencySecret) {
+                    // box.classList.replace('filled', 'wrong');
+                    // box.classList.remove('filled');
                     box.classList.add('wrong');
                     key.classList.add('wrong');
             } else {
                 if (letter === state.secret[i]) {
+                    // box.classList.replace('filled', 'right-position');
+                    // box.classList.remove('filled');
                     box.classList.add('right-position');
                     key.classList.add('right-position');
                 } else if (state.secret.includes(letter)) {
+                    // box.classList.replace('filled', 'wrong-position');
+                    // box.classList.remove('filled');
                     box.classList.add('wrong-position');
                     key.classList.add('wrong-position');
                 } else {
+                    // box.classList.replace('filled', 'wrong');
+                    // box.classList.remove('filled');
                     box.classList.add('wrong');
                     key.classList.add('wrong');
                 }
             }
         }, ((i + 1) * animation_duration) / 2);
 
-        box.classList.add('animated');
+        box.classList.replace('filled', 'flipped');
         box.style.animationDelay = `${(i * animation_duration) / 2}ms`;
     }
 
@@ -192,7 +207,7 @@ function reveal(guess) {
             }
             Object.freeze(state);
         } else if (isLoser) {
-            alert(state.secret);
+            alert(state.secret.toUpperCase());
             Object.freeze(state);
         }
     }, 3 * animation_duration);
