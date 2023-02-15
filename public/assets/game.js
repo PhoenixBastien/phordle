@@ -152,24 +152,16 @@ function reveal(guess) {
         setTimeout(() => {
             if (letterFrequencyGuess > letterFrequencySecret
                 && letterPosition > letterFrequencySecret) {
-                    // box.classList.replace('filled', 'wrong');
-                    // box.classList.remove('filled');
                     box.classList.add('wrong');
                     key.classList.add('wrong');
             } else {
                 if (letter === state.secret[i]) {
-                    // box.classList.replace('filled', 'right-position');
-                    // box.classList.remove('filled');
                     box.classList.add('right-position');
                     key.classList.add('right-position');
                 } else if (state.secret.includes(letter)) {
-                    // box.classList.replace('filled', 'wrong-position');
-                    // box.classList.remove('filled');
                     box.classList.add('wrong-position');
                     key.classList.add('wrong-position');
                 } else {
-                    // box.classList.replace('filled', 'wrong');
-                    // box.classList.remove('filled');
                     box.classList.add('wrong');
                     key.classList.add('wrong');
                 }
