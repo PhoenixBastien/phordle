@@ -1,12 +1,41 @@
-:root {
+/* :root {
     --default: #121213;
     --wrong: #3a3a3c;
     --wrong-position: #b59f3b;
     --right-position: #538d4e;
+    --filled: grey;
+} */
+
+:root {
+    --default: #18122B;
+    --wrong: #645CBB;
+    --wrong-position: #FFB100;
+    --right-position: #227C70;
+    --filled: #A084DC;
 }
+
+/* :root {
+    --default: #18122B;
+    --wrong: #6C00FF;
+    --wrong-position: #FFB100;
+    --right-position: #46C2CB;
+    --filled: #6D67E4;
+} */
 
 body {
     background: var(--default);
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    /* font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif; */
+    /* font-family: "Brush Script MT", "Brush Script Std", cursive; */
+    /* font-family: Chalkduster, fantasy; */
+    font-family: "Caveat", sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    animation: pulse 1s ease-in infinite;
 }
 
 hr {
@@ -14,13 +43,6 @@ hr {
     border: none;
     background-color: var(--wrong);
     margin: -8px -8px 5px;
-}
-
-#title {
-    color: white;
-    text-align: center;
-    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-    font-weight: bold;
 }
 
 #game {
@@ -57,6 +79,7 @@ hr {
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
+    border-radius: .4rem;
 }
 
 .box.wrong {
@@ -75,12 +98,12 @@ hr {
 }
 
 .box.filled {
-    border: 2px solid grey;
+    border: 2px solid var(--filled);
     animation: pop 0.1s linear 1;
 }
 
 .flipped {
-    border: 2px solid grey;
+    border: 2px solid var(--filled);
     animation: flip 0.5s ease;
 }
 
@@ -104,7 +127,7 @@ hr {
 }
 
 button {
-    background-color: grey;
+    background-color: var(--filled);
     border: none;
     display: inline-block;
     margin: 3px;
@@ -163,10 +186,6 @@ button:active {
     }
 }
 
-/* button:hover {
-    animation: pulse 0.5s ease-in infinite;
-}
-
 @keyframes pulse {
     25% {
         transform: scale(0.9);
@@ -174,4 +193,4 @@ button:active {
     75% {
         transform: scale(1.1);
     }
-} */
+}
