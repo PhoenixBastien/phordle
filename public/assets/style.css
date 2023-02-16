@@ -1,35 +1,38 @@
 /* :root {
-    --default: #121213;
-    --wrong: #3a3a3c;
+    --main: #121213;
+    --primary-accent: #3a3a3c;
     --wrong-position: #b59f3b;
     --right-position: #538d4e;
-    --filled: grey;
+    --secondary-accent: grey;
 } */
 
 :root {
-    --default: #18122B;
-    --wrong: #645CBB;
+    --main: #18122B;
+    --primary-accent: #645CBB;
+    --secondary-accent: #A084DC;
     --wrong-position: #FFB100;
     --right-position: #227C70;
-    --filled: #A084DC;
 }
 
 /* :root {
-    --default: #18122B;
-    --wrong: #6C00FF;
+    --main: #18122B;
+    --primary-accent: #6C00FF;
     --wrong-position: #FFB100;
     --right-position: #46C2CB;
-    --filled: #6D67E4;
+    --secondary-accent: #6D67E4;
 } */
 
 body {
-    background: var(--default);
+    background: var(--main);
+}
+
+* {
+    font-family: "Fredoka One";
 }
 
 h1 {
     color: white;
     text-align: center;
-    font-family: "Fredoka One";
     text-transform: uppercase;
     /* animation: pulse 1s ease-in infinite; */
 }
@@ -37,7 +40,7 @@ h1 {
 hr {
     height: 1px;
     border: none;
-    background-color: var(--wrong);
+    background-color: var(--primary-accent);
     margin: -8px -8px 5px;
 }
 
@@ -60,12 +63,11 @@ hr {
     width: 50px;
     height: 50px;
     box-sizing: border-box;
-    border: 2px solid var(--wrong);
+    border: 2px solid var(--primary-accent);
     border-radius: .4rem;
     color: white;
     margin: 1px;
     font-size: 30px;
-    font-family: "Fredoka One";
     text-transform: uppercase;
     display: flex;
     justify-content: center;
@@ -75,7 +77,7 @@ hr {
 }
 
 .box.wrong {
-    background: var(--wrong);
+    background: var(--primary-accent);
     border: none;
 }
 
@@ -90,12 +92,12 @@ hr {
 }
 
 .box.filled {
-    border: 2px solid var(--filled);
+    border: 2px solid var(--secondary-accent);
     animation: pop 0.1s linear 1;
 }
 
 .flipped {
-    border: 2px solid var(--filled);
+    border: 2px solid var(--secondary-accent);
     animation: flip 0.5s ease;
 }
 
@@ -119,7 +121,7 @@ hr {
 }
 
 button {
-    background-color: var(--filled);
+    background-color: var(--secondary-accent);
     color: white;
     width: 40px;
     height: 55px;
@@ -128,7 +130,6 @@ button {
     display: inline-block;
     margin: 3px;
     font-size: 1.3rem;
-    font-family: "Fredoka One";
     text-transform: uppercase;
     cursor: pointer;
     user-select: none;
@@ -137,7 +138,7 @@ button {
 }
 
 .key.wrong {
-    background: var(--wrong);
+    background: var(--primary-accent);
 }
 
 .key.wrong-position {
