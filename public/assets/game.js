@@ -179,27 +179,27 @@ function reveal(guess) {
         if (isWinner) {
             switch (state.currentRow) {
                 case 1:
-                    alert('Genius');
+                    popup('Genius');
                     break;
                 case 2:
-                    alert('Magnificent');
+                    popup('Magnificent');
                     break;
                 case 3:
-                    alert('Impressive');
+                    popup('Impressive');
                     break;
                 case 4:
-                    alert('Splendid');
+                    popup('Splendid');
                     break;
                 case 5:
-                    alert('Great');
+                    popup('Great');
                     break;
                 case 6:
-                    alert('Phew');
+                    popup('Phew');
                     break;
             }
             Object.freeze(state);
         } else if (isLoser) {
-            alert(state.secret.toUpperCase());
+            popup(state.secret.toUpperCase());
             Object.freeze(state);
         }
     }, 3 * animation_duration);
@@ -234,10 +234,10 @@ function checkAnswer() {
                 state.currentRow++;
                 state.currentCol = 0;
             } else {
-                alert('Not a valid word.');
+                popup('Not a valid word.');
             }
         } else {
-            alert('Not enough letters.');
+            popup('Not enough letters.');
         }
     }
 }
@@ -279,6 +279,16 @@ function enableVirtualKeyboard() {
     });
 }
 
+// When the user clicks on div, open the popup
+function popup(message) {
+    const popup = document.getElementById("myPopup");
+    popup.textContent = message;
+    setTimeout(() => {
+        popup.classList.add('show');
+    });
+    popup.classList.remove('show');
+}
+
 function start() {
     const game = document.getElementById('game');
     drawGrid(game);
@@ -290,3 +300,4 @@ function start() {
 
 start();
 console.log(state.secret);
+popup(state.secret);

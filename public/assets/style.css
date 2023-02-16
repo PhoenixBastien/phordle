@@ -29,13 +29,9 @@ body {
 h1 {
     color: white;
     text-align: center;
-    /* font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif; */
-    /* font-family: "Brush Script MT", "Brush Script Std", cursive; */
-    /* font-family: Chalkduster, fantasy; */
-    font-family: "Caveat", sans-serif;
-    font-weight: normal;
+    font-family: "Fredoka One";
     text-transform: uppercase;
-    animation: pulse 1s ease-in infinite;
+    /* animation: pulse 1s ease-in infinite; */
 }
 
 hr {
@@ -49,7 +45,6 @@ hr {
     display: grid;
     place-items: center;
     width: 100%;
-    /* height: 600px; */
 }
 
 .grid {
@@ -66,20 +61,17 @@ hr {
     height: 50px;
     box-sizing: border-box;
     border: 2px solid var(--wrong);
+    border-radius: .4rem;
     color: white;
     margin: 1px;
     font-size: 30px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
+    font-family: "Fredoka One";
     text-transform: uppercase;
     display: flex;
     justify-content: center;
     align-items: center;
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
-    border-radius: .4rem;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .box.wrong {
@@ -128,21 +120,19 @@ hr {
 
 button {
     background-color: var(--filled);
-    border: none;
-    display: inline-block;
-    margin: 3px;
-    font-size: 1.3rem;
-    font-weight: bold;
     color: white;
     width: 40px;
     height: 55px;
+    border: none;
     border-radius: .3rem;
+    display: inline-block;
+    margin: 3px;
+    font-size: 1.3rem;
+    font-family: "Fredoka One";
     text-transform: uppercase;
     cursor: pointer;
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
+    user-select: none;
+    -webkit-user-select: none;
     outline: none;
 }
 
@@ -158,11 +148,7 @@ button {
     background: var(--right-position);
 }
 
-.enter {
-    width: 65px;
-}
-
-.backspace {
+.enter, .backspace {
     width: 65px;
 }
 
@@ -176,10 +162,6 @@ button:active {
     }
 }
 
-/* .box:active {
-    animation: pop 0.1s linear 1;
-} */
-
 @keyframes pop {
     50% {
         transform: scale(1.2);
@@ -192,5 +174,56 @@ button:active {
     }
     75% {
         transform: scale(1.1);
+    }
+}
+
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+/* .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+} */
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    animation: fadeinout 1.5s linear forwards;
+}
+
+@keyframes fadeinout {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
     }
 }
