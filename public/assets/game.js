@@ -121,8 +121,8 @@ function isValid(word) {
     return dictionary.includes(word.toLowerCase());
 }
 
-function getLetterFrequency(word, letter) {
-    const regex = RegExp(`${letter.toLowerCase()}`);
+function getLetterCount(word, letter) {
+    const regex = RegExp(`${letter.toLowerCase()}`, 'g');
     return (word.toLowerCase().match(regex) || '').length;
 }
 
@@ -145,13 +145,13 @@ function reveal(guess) {
         const letter = box.textContent.toLowerCase();
         const key = document.getElementById(letter);
 
-        const letterFrequencySecret = getLetterFrequency(state.secret, letter);
-        const letterFrequencyGuess = getLetterFrequency(guess, letter);
+        const letterCountSecret = getLetterCount(state.secret, letter);
+        const letterCountGuess = getLetterCount(guess, letter);
         const letterPosition = getLetterPosition(guess, letter, i);
         
         setTimeout(() => {
-            if (letterFrequencyGuess > letterFrequencySecret
-                && letterPosition > letterFrequencySecret) {
+            if (letterCountGuess > letterCountSecret
+                && letterPosition > letterCountSecret) {
                     box.classList.add('wrong');
                     key.classList.add('wrong');
             } else {
