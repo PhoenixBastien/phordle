@@ -1,9 +1,9 @@
 /* :root {
     --main: #121213;
     --primary-accent: #3a3a3c;
+    --secondary-accent: grey;
     --wrong-position: #b59f3b;
     --right-position: #538d4e;
-    --secondary-accent: grey;
 } */
 
 :root {
@@ -13,14 +13,6 @@
     --wrong-position: #FFB100;
     --right-position: #227C70;
 }
-
-/* :root {
-    --main: #18122B;
-    --primary-accent: #6C00FF;
-    --wrong-position: #FFB100;
-    --right-position: #46C2CB;
-    --secondary-accent: #6D67E4;
-} */
 
 body {
     background: var(--main);
@@ -100,16 +92,11 @@ hr {
     animation: flip 0.5s ease;
 }
 
-@keyframes flip {
-    0% {
-        transform: scaleY(1);
-    }
-    50% {
-        transform: scaleY(0);
-    }
-    100% {
-        transform: scaleY(1);
-    }
+.box.shaked {
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .keyboard {
@@ -136,6 +123,10 @@ button {
     outline: none;
 }
 
+button:active {
+    animation: push 0.1s linear 1;
+}
+
 .key.wrong {
     background: var(--primary-accent);
 }
@@ -150,31 +141,6 @@ button {
 
 .enter, .backspace {
     width: 65px;
-}
-
-button:active {
-    animation: push 0.1s linear 1;
-}
-
-@keyframes push {
-    50% {
-        transform: scale(0.8);
-    }
-}
-
-@keyframes pop {
-    50% {
-        transform: scale(1.2);
-    }
-}
-
-@keyframes pulse {
-    25% {
-        transform: scale(0.9);
-    }
-    75% {
-        transform: scale(1.1);
-    }
 }
 
 /* Popup container - can be anything you want */
@@ -206,20 +172,37 @@ button:active {
     animation: fadeinout 1.5s linear forwards;
 }
 
-@keyframes fadeinout {
-    0%, 100% {
-        opacity: 0;
+@keyframes flip {
+    0% {
+        transform: scaleY(1);
     }
     50% {
-        opacity: 1;
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
     }
 }
 
-.box.shaked {
-    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    perspective: 1000px;
+@keyframes push {
+    50% {
+        transform: scale(0.8);
+    }
+}
+
+@keyframes pop {
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes pulse {
+    25% {
+        transform: scale(0.9);
+    }
+    75% {
+        transform: scale(1.1);
+    }
 }
 
 @keyframes shake {
@@ -234,5 +217,14 @@ button:active {
     }
     40%, 60% {
         transform: translate3d(4px, 0, 0);
+    }
+}
+
+@keyframes fadeinout {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
     }
 }
