@@ -138,7 +138,7 @@ function getLetterPosition(word, letter, position) {
 
 function reveal(guess) {
     const row = state.currentRow;
-    const animation_duration = 500;
+    const animationDuration = 500;
 
     for (let i = 0; i < 5; i++) {
         const box = document.getElementById(`box${row}${i}`);
@@ -166,10 +166,10 @@ function reveal(guess) {
                     key.classList.add('wrong');
                 }
             }
-        }, ((i + 1) * animation_duration) / 2);
+        }, ((i + 1) * animationDuration) / 2);
 
         box.classList.add('flipped');
-        box.style.animationDelay = `${(i * animation_duration) / 2}ms`;
+        box.style.animationDelay = `${(i * animationDuration) / 2}ms`;
     }
 
     const isWinner = state.secret === guess.toLowerCase();
@@ -198,11 +198,12 @@ function reveal(guess) {
                     break;
             }
             Object.freeze(state);
+            bounceRow();
         } else if (isLoser) {
             popup(state.secret.toUpperCase());
             Object.freeze(state);
         }
-    }, 3 * animation_duration);
+    }, 3 * animationDuration);
 }
 
 function isLetter(key) {
@@ -292,15 +293,21 @@ function popup(message) {
 }
 
 function shakeRow() {
-    setTimeout(() => {
-        for (let col = 0; col < state.grid[state.currentRow].length; col++) {
-            const box = document.getElementById(`box${state.currentRow}${col}`);
-            setTimeout(() => {
-                box.classList.toggle('shaked');
-            }, 1000);
+    for (let col = 0; col < state.grid[state.currentRow].length; col++) {
+        const box = document.getElementById(`box${state.currentRow}${col}`);
+        setTimeout(() => {
             box.classList.toggle('shaked');
-        }
-    });
+        }, 1000);
+        box.classList.toggle('shaked');
+    }
+}
+
+function bounceRow() {
+    for (let col = 0; col < state.grid[state.currentRow - 1].length; col++) {
+        const box = document.getElementById(`box${state.currentRow - 1}${col}`);
+        box.classList.replace('flipped', 'first');
+        box.style.animationDelay = `.${col}s`;
+    }
 }
 
 function start() {
