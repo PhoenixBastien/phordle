@@ -152,23 +152,23 @@ function reveal(guess) {
         setTimeout(() => {
             if (letterCountGuess > letterCountSecret
                 && letterPosition > letterCountSecret) {
-                    box.classList.add('wrong');
+                    box.classList.replace('filled', 'wrong');
                     key.classList.add('wrong');
             } else {
                 if (letter === state.secret[i]) {
-                    box.classList.add('right-position');
+                    box.classList.replace('filled', 'right-position');
                     key.classList.add('right-position');
                 } else if (state.secret.includes(letter)) {
-                    box.classList.add('wrong-position');
+                    box.classList.replace('filled', 'wrong-position');
                     key.classList.add('wrong-position');
                 } else {
-                    box.classList.add('wrong');
+                    box.classList.replace('filled', 'wrong');
                     key.classList.add('wrong');
                 }
             }
         }, ((i + 1) * animation_duration) / 2);
 
-        box.classList.replace('filled', 'flipped');
+        box.classList.add('flipped');
         box.style.animationDelay = `${(i * animation_duration) / 2}ms`;
     }
 
@@ -235,9 +235,11 @@ function checkAnswer() {
                 state.currentCol = 0;
             } else {
                 popup('Not a valid word.');
+                shakeRow();
             }
         } else {
             popup('Not enough letters.');
+            shakeRow();
         }
     }
 }
@@ -287,6 +289,18 @@ function popup(message) {
         popup.classList.add('show');
     });
     popup.classList.remove('show');
+}
+
+function shakeRow() {
+    setTimeout(() => {
+        for (let col = 0; col < state.grid[state.currentRow].length; col++) {
+            const box = document.getElementById(`box${state.currentRow}${col}`);
+            setTimeout(() => {
+                box.classList.toggle('shaked');
+            }, 1000);
+            box.classList.toggle('shaked');
+        }
+    });
 }
 
 function start() {
