@@ -159,8 +159,8 @@ button:active {
 .popup .popuptext {
     visibility: hidden;
     width: 160px;
-    background-color: #555;
-    color: #fff;
+    background-color: var(--secondary-accent);
+    color: white;
     text-align: center;
     border-radius: 6px;
     padding: 8px 0;
@@ -174,7 +174,7 @@ button:active {
 /* Toggle this class - hide and show the popup */
 .popup .show {
     visibility: visible;
-    animation: fadeinout 1.5s linear forwards;
+    animation: fadeinout 2s linear forwards;
 }
 
 @keyframes flip {

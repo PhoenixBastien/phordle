@@ -296,9 +296,9 @@ function shakeRow() {
     for (let col = 0; col < state.grid[state.currentRow].length; col++) {
         const box = document.getElementById(`box${state.currentRow}${col}`);
         setTimeout(() => {
-            box.classList.toggle('shaked');
-        }, 1000);
-        box.classList.toggle('shaked');
+            box.classList.add('shaked');
+        });
+        box.classList.remove('shaked');
     }
 }
 
