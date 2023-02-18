@@ -305,7 +305,7 @@ function shakeRow() {
 function bounceRow() {
     for (let col = 0; col < state.grid[state.currentRow - 1].length; col++) {
         const box = document.getElementById(`box${state.currentRow - 1}${col}`);
-        box.classList.replace('flipped', 'first');
+        box.classList.replace('flipped', 'bounced');
         box.style.animationDelay = `.${col}s`;
     }
 }
