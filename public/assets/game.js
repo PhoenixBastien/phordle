@@ -288,7 +288,7 @@ function popup(message) {
     popup.textContent = message;
     setTimeout(() => {
         popup.classList.add('show');
-    });
+    }, 200);
     popup.classList.remove('show');
 }
 
@@ -296,9 +296,9 @@ function shakeRow() {
     for (let col = 0; col < state.grid[state.currentRow].length; col++) {
         const box = document.getElementById(`box${state.currentRow}${col}`);
         setTimeout(() => {
-            box.classList.add('shaked');
-        });
-        box.classList.remove('shaked');
+            box.classList.toggle('shaked');
+        }, 500);
+        box.classList.toggle('shaked');
     }
 }
 

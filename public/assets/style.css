@@ -26,6 +26,8 @@ h1 {
     color: white;
     text-align: center;
     text-transform: uppercase;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
     /* animation: pulse 1s ease-in infinite; */
 }
 
@@ -40,6 +42,37 @@ hr {
     display: grid;
     place-items: center;
     width: 100%;
+}
+
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    -webkit-user-select: none;
+    margin-top: 2px;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: var(--secondary-accent);
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    animation: fadeinout 2s linear forwards;
 }
 
 .grid {
@@ -93,7 +126,7 @@ hr {
 }
 
 .box.shaked {
-    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    animation: shake .5s cubic-bezier(.36, .07, .19, .97) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;
@@ -144,37 +177,7 @@ button:active {
 }
 
 .enter, .backspace {
-    width: 65px;
-}
-
-/* Popup container - can be anything you want */
-.popup {
-    position: relative;
-    display: inline-block;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-/* The actual popup */
-.popup .popuptext {
-    visibility: hidden;
-    width: 160px;
-    background-color: var(--secondary-accent);
-    color: white;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -80px;
-}
-
-/* Toggle this class - hide and show the popup */
-.popup .show {
-    visibility: visible;
-    animation: fadeinout 2s linear forwards;
+    width: 63px;
 }
 
 @keyframes flip {
@@ -197,7 +200,7 @@ button:active {
 
 @keyframes pop {
     50% {
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 }
 
@@ -235,14 +238,14 @@ button:active {
 }
 
 @keyframes bounce {
-    0% {
+    0%, 100% {
         transform: scale(1, 1) translateY(0);
     }
     10% {
         transform: scale(1.1, .9) translateY(0);
     }
     30% {
-        transform: scale(.9, 1.1)   translateY(-55px);
+        transform: scale(.9, 1.1) translateY(-55px);
     }
     50% {
         transform: scale(1.05, .95) translateY(0);
@@ -251,9 +254,6 @@ button:active {
         transform: scale(1, 1) translateY(-7px);
     }
     65% {
-        transform: scale(1, 1) translateY(0);
-    }
-    100% {
         transform: scale(1, 1) translateY(0);
     }
 }
