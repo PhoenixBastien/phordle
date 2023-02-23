@@ -282,7 +282,6 @@ function enableVirtualKeyboard() {
     });
 }
 
-// When the user clicks on div, open the popup
 function popup(message) {
     const popup = document.getElementById("myPopup");
     popup.textContent = message;
