@@ -16,6 +16,8 @@
 
 body {
     background: var(--main);
+    height: 100%;
+    margin: 0;
 }
 
 * {
@@ -27,20 +29,23 @@ h1 {
     text-align: center;
     text-transform: uppercase;
     margin-top: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 hr {
     height: 1px;
     border: none;
     background-color: var(--primary-accent);
-    margin: -8px -8px 5px;
+    width: 100%;
 }
 
 #game {
     display: grid;
     place-items: center;
     width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    position: fixed;
 }
 
 .popup-container {
@@ -48,7 +53,6 @@ hr {
     display: inline-block;
     user-select: none;
     -webkit-user-select: none;
-    margin-top: 2px;
 }
 
 .popup-container .popup {
@@ -78,6 +82,8 @@ hr {
     grid-template-columns: repeat(5, auto);
     padding: 4px;
     gap: 3px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .box {
@@ -136,7 +142,7 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 button {
