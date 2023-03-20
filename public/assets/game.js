@@ -319,4 +319,3 @@ function start() {
 }
 
 start();
-console.log(state.secret);
