@@ -1,5 +1,5 @@
 <?php
-$dictionary = [
+define('DICTIONARY', [
     'which',
     'there',
     'their',
@@ -5757,6 +5757,6 @@ $dictionary = [
     'rumba',
     'biffy',
     'pupal'
-];
-var_dump($dictionary);
+]);
+// var_dump($dictionary);
 ?>
