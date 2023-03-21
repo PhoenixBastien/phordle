@@ -218,25 +218,6 @@ function pop() {
     state.currentCol--;
 }
 
-// function check(word) {
-//     if (!Object.isFrozen(state)) {
-//         if (word.length === 5) {
-//             const isValidWord = dictionary.includes(word.toLowerCase());
-//             if (isValidWord) {
-//                 reveal(word);
-//                 state.currentRow++;
-//                 state.currentCol = 0;
-//             } else {
-//                 popup('Not a valid word.');
-//                 shakeRow();
-//             }
-//         } else {
-//             popup('Not enough letters.');
-//             shakeRow();
-//         }
-//     }
-// }
-
 function check(word) {
     if (!Object.isFrozen(state)) {
         const xmlhttp = new XMLHttpRequest();
