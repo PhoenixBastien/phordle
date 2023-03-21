@@ -12,16 +12,8 @@ require_once('Dictionary.php');
 
 class Game
 {
-    // public array $state;
-
     public function __construct() {
         define('SECRET', DICTIONARY[array_rand(DICTIONARY)]);
-        // $state = [
-        //     'secret' => DICTIONARY[array_rand(DICTIONARY)],
-        //     'grid' => array_fill(0, 6, array_fill(0, 5, '')),
-        //     'currentRow' => 0,
-        //     'currentCol' => 0
-        // ];
     }
 
     public function isValid($word) {

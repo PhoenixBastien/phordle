@@ -1,7 +1,7 @@
 import { dictionary } from './dictionary.js'
 
 const state = {
-    secret: dictionary[Math.floor(Math.random() * dictionary.length)],
+    // secret: dictionary[Math.floor(Math.random() * dictionary.length)],
     grid: Array(6).fill().map(() => Array(5).fill('')),
     currentRow: 0,
     currentCol: 0
@@ -115,10 +115,6 @@ function getCurrentWord() {
     return state.grid[state.currentRow].reduce((prev, curr) => prev + curr);
 }
 
-// function isValid(word) {
-//     return dictionary.includes(word.toLowerCase());
-// }
-
 function getLetterCount(word, letter) {
     const regex = RegExp(`${letter.toLowerCase()}`, 'g');
     return (word.toLowerCase().match(regex) || '').length;
@@ -146,14 +142,8 @@ function reveal(guess) {
         const xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                const data = JSON.parse(this.responseText);
-
-                // const letterCountSecret = parseInt(data['lettercountsecret']);
-                // const letterCountGuess = parseInt(data['lettercountguess']);
-                // const letterPosition = parseInt(data['letterposition']);
-
                 setTimeout(() => {
-                    const letterStatus = data['letterposition'];
+                    const letterStatus = this.responseText;
                     box.classList.replace('filled', letterStatus);
                     key.classList.add(letterStatus);
                 }, ((i + 1) * animationDuration) / 2);
@@ -166,38 +156,46 @@ function reveal(guess) {
         xmlhttp.send();
     }
 
-    const isWinner = state.secret === guess.toLowerCase();
+    // const isWinner = state.secret === guess.toLowerCase();
     const isLoser = state.currentRow === 5;
 
-    setTimeout(() => {
-        if (isWinner) {
-            switch (state.currentRow) {
-                case 1:
-                    popup('Genius');
-                    break;
-                case 2:
-                    popup('Magnificent');
-                    break;
-                case 3:
-                    popup('Impressive');
-                    break;
-                case 4:
-                    popup('Splendid');
-                    break;
-                case 5:
-                    popup('Great');
-                    break;
-                case 6:
-                    popup('Phew');
-                    break;
-            }
-            Object.freeze(state);
-            bounceRow();
-        } else if (isLoser) {
-            popup(state.secret.toUpperCase());
-            Object.freeze(state);
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            const gameStatus = this.responseText;
+            setTimeout(() => {
+                if (gameStatus === 'Winner') {
+                    switch (state.currentRow) {
+                        case 1:
+                            popup('Genius');
+                            break;
+                        case 2:
+                            popup('Magnificent');
+                            break;
+                        case 3:
+                            popup('Impressive');
+                            break;
+                        case 4:
+                            popup('Splendid');
+                            break;
+                        case 5:
+                            popup('Great');
+                            break;
+                        case 6:
+                            popup('Phew');
+                            break;
+                    }
+                    Object.freeze(state);
+                    bounceRow();
+                } else if (isLoser) {
+                    // popup(state.secret.toUpperCase());
+                    popup('word goes here');
+                    Object.freeze(state);
+                }
+            }, 3 * animationDuration);
         }
-    }, 3 * animationDuration);
+    }
+    xmlhttp.open("GET", "api.php?action=gamestatus&word=" + guess.toLowerCase(), true);
+    xmlhttp.send();
 }
 
 function isLetter(key) {
@@ -336,6 +334,15 @@ function start() {
 
     enablePhysicalKeyboard();
     enableVirtualKeyboard();
+
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            console.log('W');
+        }
+    }
+    xmlhttp.open("GET", "api.php?action=newgame", true);
+    xmlhttp.send();
 }
 
 start();

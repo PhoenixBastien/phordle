@@ -5,11 +5,9 @@ use Phordle\Game;
 
 $action = $_GET["action"];
 
-switch ($word ?? "version") {
+switch ($action) {
 case "newgame":
     $g = new Game();
-case "secret":
-    $secret = $g->getSecret();
     break;
 case "check":
     $word = $_GET["word"];
@@ -38,24 +36,14 @@ case "countpos":
             $letterStatus = "wrong";
         }
     }
-    // $data = [
-    //     "lettercountsecret" => $letterCountSecret,
-    //     "lettercountguess" => $letterCountGuess,
-    //     "letterposition" => $letterPosition,
-    //     "letterstatus" => $letterStatus
-    // ];
-    // echo json_encode($data);
     echo $letterStatus;
+    break;
+case "gamestatus":
+    $secret = $g->getSecret();
+    $word = $_GET["word"];
+    if ($secret === $word) {
+        echo "Winner";
+    }
+    break;
 }
-
-// $guess = $_GET['guess'];
-
-// $g = new Game();
-
-// if (strlen($word) === 5) {
-//     $isValidWord = in_array(strtolower($word), DICTIONARY);
-//     if ($isValidWord) {
-//         $g->$state['currentRow'] += 1;
-//     }
-// }
 ?>
