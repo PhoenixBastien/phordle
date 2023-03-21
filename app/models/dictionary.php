@@ -5758,5 +5758,4 @@ define('DICTIONARY', [
     'biffy',
     'pupal'
 ]);
-// var_dump($dictionary);
 ?>

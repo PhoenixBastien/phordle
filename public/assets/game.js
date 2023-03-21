@@ -2,9 +2,7 @@ import { dictionary } from './dictionary.js'
 
 const state = {
     secret: dictionary[Math.floor(Math.random() * dictionary.length)],
-    grid: Array(6)
-        .fill()
-        .map(() => Array(5). fill('')),
+    grid: Array(6).fill().map(() => Array(5).fill('')),
     currentRow: 0,
     currentCol: 0
 }
@@ -117,9 +115,9 @@ function getCurrentWord() {
     return state.grid[state.currentRow].reduce((prev, curr) => prev + curr);
 }
 
-function isValid(word) {
-    return dictionary.includes(word.toLowerCase());
-}
+// function isValid(word) {
+//     return dictionary.includes(word.toLowerCase());
+// }
 
 function getLetterCount(word, letter) {
     const regex = RegExp(`${letter.toLowerCase()}`, 'g');
@@ -145,31 +143,27 @@ function reveal(guess) {
         const letter = box.textContent.toLowerCase();
         const key = document.getElementById(letter);
 
-        const letterCountSecret = getLetterCount(state.secret, letter);
-        const letterCountGuess = getLetterCount(guess, letter);
-        const letterPosition = getLetterPosition(guess, letter, i);
-        
-        setTimeout(() => {
-            if (letterCountGuess > letterCountSecret
-                && letterPosition > letterCountSecret) {
-                    box.classList.replace('filled', 'wrong');
-                    key.classList.add('wrong');
-            } else {
-                if (letter === state.secret[i]) {
-                    box.classList.replace('filled', 'right-position');
-                    key.classList.add('right-position');
-                } else if (state.secret.includes(letter)) {
-                    box.classList.replace('filled', 'wrong-position');
-                    key.classList.add('wrong-position');
-                } else {
-                    box.classList.replace('filled', 'wrong');
-                    key.classList.add('wrong');
-                }
-            }
-        }, ((i + 1) * animationDuration) / 2);
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                const data = JSON.parse(this.responseText);
 
-        box.classList.add('flipped');
-        box.style.animationDelay = `${(i * animationDuration) / 2}ms`;
+                // const letterCountSecret = parseInt(data['lettercountsecret']);
+                // const letterCountGuess = parseInt(data['lettercountguess']);
+                // const letterPosition = parseInt(data['letterposition']);
+
+                setTimeout(() => {
+                    const letterStatus = data['letterposition'];
+                    box.classList.replace('filled', letterStatus);
+                    key.classList.add(letterStatus);
+                }, ((i + 1) * animationDuration) / 2);
+        
+                box.classList.add('flipped');
+                box.style.animationDelay = `${(i * animationDuration) / 2}ms`;
+            }
+        }
+        xmlhttp.open("GET", "api.php?action=countpos&word=" + guess + "&letter=" + letter + "&position=" + i, true);
+        xmlhttp.send();
     }
 
     const isWinner = state.secret === guess.toLowerCase();
@@ -226,22 +220,46 @@ function pop() {
     state.currentCol--;
 }
 
-function checkAnswer() {
+// function check(word) {
+//     if (!Object.isFrozen(state)) {
+//         if (word.length === 5) {
+//             const isValidWord = dictionary.includes(word.toLowerCase());
+//             if (isValidWord) {
+//                 reveal(word);
+//                 state.currentRow++;
+//                 state.currentCol = 0;
+//             } else {
+//                 popup('Not a valid word.');
+//                 shakeRow();
+//             }
+//         } else {
+//             popup('Not enough letters.');
+//             shakeRow();
+//         }
+//     }
+// }
+
+function check(word) {
     if (!Object.isFrozen(state)) {
-        if (state.currentCol === 5) {
-            const word = getCurrentWord();
-            if (isValid(word)) {
-                reveal(word);
-                state.currentRow++;
-                state.currentCol = 0;
-            } else {
-                popup('Not a valid word.');
-                shakeRow();
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                const check = this.responseText;
+                switch(check) {
+                case 'Not enough letters.':
+                case 'Not a valid word.':
+                    popup(check);
+                    shakeRow();
+                    break;
+                default:
+                    reveal(word);
+                    state.currentRow++;
+                    state.currentCol = 0;
+                }
             }
-        } else {
-            popup('Not enough letters.');
-            shakeRow();
         }
+        xmlhttp.open("GET", "api.php?action=guess&word=" + word, true);
+        xmlhttp.send();
     }
 }
 
@@ -255,7 +273,8 @@ function enablePhysicalKeyboard() {
             pop();
             updateGrid();
         } else if (key === 'Enter') {
-            checkAnswer();
+            const guess = getCurrentWord();
+            check(guess);
         }
     });
 }
@@ -278,7 +297,8 @@ function enableVirtualKeyboard() {
     });
 
     enter.addEventListener('click', () => {
-        checkAnswer();
+        const guess = getCurrentWord();
+        check(guess);
     });
 }
 
