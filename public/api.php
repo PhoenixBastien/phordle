@@ -1,34 +1,34 @@
 <?php
 require_once('_config.php');
-
-use Phordle\Game;
+require_once($GLOBALS["appDir"] . "/models/Game.php");
 
 $action = $_GET["action"];
 
+$secret = 'dummy'; // hard coded word :(
+
 switch ($action) {
 case "newgame":
-    $g = new Game();
+    $secret = newWord();
+    echo $secret;
     break;
 case "check":
     $word = $_GET["word"];
-    $value = $g->check($word);
+    echo check($word);
     break;
 case "countpos":
     $word = $_GET["word"];
     $letter = $_GET["letter"];
     $position = $_GET["position"];
-    $secret = $g->getSecret();
 
-    $letterCountSecret = $g->getLetterCount($secret, $letter);
-    $letterCountGuess = $g->getLetterCount($word, $letter);
-    $letterPosition = $g->getLetterPosition($word, $letter, $position);
+    $letterCountSecret = getLetterCount($secret, $letter);
+    $letterCountGuess = getLetterCount($word, $letter);
+    $letterPosition = getLetterPosition($word, $letter, $position);
 
     if ($letterCountGuess > $letterCountSecret
     && $letterPosition > $letterCountSecret) {
         $letterStatus = "wrong";
-    }
-    else {
-        if ($letter === $secret[$position]) {
+    } else {
+        if ($letter == $secret[$position]) {
             $letterStatus = "right-position";
         } else if (str_contains($secret, $letter)) {
             $letterStatus = "wrong-position";
@@ -36,12 +36,12 @@ case "countpos":
             $letterStatus = "wrong";
         }
     }
+
     echo $letterStatus;
     break;
 case "gamestatus":
-    $secret = $g->getSecret();
     $word = $_GET["word"];
-    if ($secret === $word) {
+    if ($secret == $word) {
         echo "Winner";
     }
     break;

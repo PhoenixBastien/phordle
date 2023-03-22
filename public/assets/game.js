@@ -1,7 +1,4 @@
-import { dictionary } from './dictionary.js'
-
 const state = {
-    // secret: dictionary[Math.floor(Math.random() * dictionary.length)],
     grid: Array(6).fill().map(() => Array(5).fill('')),
     currentRow: 0,
     currentCol: 0
@@ -156,10 +153,10 @@ function reveal(guess) {
         xmlhttp.send();
     }
 
-    // const isWinner = state.secret === guess.toLowerCase();
     const isLoser = state.currentRow === 5;
 
-    xmlhttp.onreadystatechange = function() {
+    const xmlhttp2 = new XMLHttpRequest();
+    xmlhttp2.onreadystatechange = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             const gameStatus = this.responseText;
             setTimeout(() => {
@@ -187,15 +184,14 @@ function reveal(guess) {
                     Object.freeze(state);
                     bounceRow();
                 } else if (isLoser) {
-                    // popup(state.secret.toUpperCase());
                     popup('word goes here');
                     Object.freeze(state);
                 }
             }, 3 * animationDuration);
         }
     }
-    xmlhttp.open("GET", "api.php?action=gamestatus&word=" + guess.toLowerCase(), true);
-    xmlhttp.send();
+    xmlhttp2.open("GET", "api.php?action=gamestatus&word=" + guess.toLowerCase(), true);
+    xmlhttp2.send();
 }
 
 function isLetter(key) {
@@ -225,19 +221,18 @@ function check(word) {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                 const check = this.responseText;
                 switch(check) {
-                case 'Not enough letters.':
-                case 'Not a valid word.':
-                    popup(check);
-                    shakeRow();
-                    break;
-                default:
+                case 'A valid word.':
                     reveal(word);
                     state.currentRow++;
                     state.currentCol = 0;
+                    break;
+                default:
+                    popup(check);
+                    shakeRow();
                 }
             }
         }
-        xmlhttp.open("GET", "api.php?action=guess&word=" + word, true);
+        xmlhttp.open("GET", "api.php?action=check&word=" + word, true);
         xmlhttp.send();
     }
 }
@@ -282,7 +277,7 @@ function enableVirtualKeyboard() {
 }
 
 function popup(message) {
-    const popup = document.getElementById("myPopup");
+    const popup = document.getElementById('myPopup');
     popup.textContent = message;
     setTimeout(() => {
         popup.classList.add('show');

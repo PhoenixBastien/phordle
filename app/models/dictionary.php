@@ -1,4 +1,5 @@
 <?php
+// source: https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt
 define('DICTIONARY', [
     'which',
     'there',
